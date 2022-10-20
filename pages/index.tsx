@@ -116,7 +116,9 @@ export default function IndexPage() {
       axios.get(`${url}/api/mems?pagination[page]=${currentPage}&pagination[pageSize]=10&populate=*&sort[0]=id%3Adesc`)
         .then(response => {
           /* eslint-disable */
-          setMems(mems + response.data.data);
+          let d: any = [...mems, ...response.data.data];
+          setMems(d);
+          console.log(mems);
           if (response.data.data.length != 0) {
             setCurrentPage(prevState => prevState + 1);
           }
