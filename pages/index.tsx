@@ -87,7 +87,6 @@ export default function IndexPage() {
 
   const [name, setName] = useState('...')
   const jwt = parseCookies().jwt;
-  const id = parseCookies().id;
 
   useEffect(() => {
     const n = parseCookies().username;

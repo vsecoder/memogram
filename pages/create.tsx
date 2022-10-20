@@ -53,9 +53,9 @@ export default function create() {
       return;
     }
     /* eslint-disable */
-    var t = [];
+    var t: [] = [];
     tags.split(' ').map((tag) => {
-      t = [...t, {name: tag}];
+      t: [] = [...t, {name: tag}];
     })
 
     const formData = new FormData();
