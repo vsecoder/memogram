@@ -13,7 +13,7 @@ import {
 } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 
-const url = "http://localhost:1337";
+const url = "http://kreepmeister.keenetic.pro:1337";
   
 export default function create() {
   const name = parseCookies().username;

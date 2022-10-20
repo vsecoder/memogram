@@ -14,7 +14,7 @@ import {
 import { showNotification } from '@mantine/notifications';
 import Link from 'next/link';
 
-const url = "http://localhost:1337";
+const url = "http://kreepmeister.keenetic.pro:1337";
   
   export default function login() {
     const [username, setUsername] = useState('')
