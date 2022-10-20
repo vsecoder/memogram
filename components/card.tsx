@@ -40,9 +40,7 @@ export function CardBlock({ title, image, text, author }: CardData) {
     <Container py="xl" key={title}>
       <div className={classes.grid}>
         <Card key={title} p="md" radius="md" component="a" className={classes.card}>
-          <AspectRatio ratio={1920 / 1080}>
-            <Image src={image} />
-          </AspectRatio>
+          <Image src={image} />
           <Text color="dimmed" size="xs" transform="uppercase" weight={700} mt="md">
             {author}
           </Text>

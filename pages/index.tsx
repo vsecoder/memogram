@@ -24,6 +24,7 @@ import { SwitchToggle } from '../components/themetoggle';
 import Link from 'next/link';
 import { parseCookies } from 'nookies';
 import axios from "axios";
+import Router from 'next/router';
 
 const url = "http://localhost:1337";
 
@@ -87,7 +88,7 @@ export default function IndexPage() {
   const [name, setName] = useState('...')
   const jwt = parseCookies().jwt;
   const id = parseCookies().id;
-  //const username = parseCookies().username;
+
   useEffect(() => {
     const n = parseCookies().username;
     if (n) {
@@ -110,7 +111,7 @@ export default function IndexPage() {
 
   useEffect(() => {
     if (fetching) {
-      axios.get(`${url}/api/mems?pagination[page]=${currentPage}&pagination[pageSize]=10&populate=*&sort[0]=title%3Adesc`)
+      axios.get(`${url}/api/mems?pagination[page]=${currentPage}&pagination[pageSize]=10&populate=*&sort[0]=id%3Adesc`)
         .then(response => {
           setMems([...mems, ...response.data.data]);
           if (response.data.data.length != 0) {
@@ -122,6 +123,27 @@ export default function IndexPage() {
         });
     }
   }, [fetching])
+
+  async function check_jwt() {
+    if (jwt) {
+      const r = await fetch(`${url}/api/users/me`, {
+        headers: {
+          Authorization: `Bearer ${jwt}`,
+        },
+      })
+      const res = await r.json();
+      console.log(res);
+      console.log(res.statusCode);
+      if (res.error || res.statusCode == 401 || res.statusCode == 403) {
+        Router.push('/logout');
+      }
+    }
+  }
+
+
+  useEffect(() => {
+    check_jwt()
+  }, [])
 
   const scrollHandler = (e) => {
     if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100) {
@@ -190,11 +212,18 @@ export default function IndexPage() {
                 </>
                 }
                 {user.name == 'Войти' && 
-                  <Link href='/auth'>
-                    <Menu.Item icon={<IconUserPlus size={14} color={theme.colors.yellow[6]} stroke={1.5} />}>
-                      Войти
-                    </Menu.Item>
-                  </Link>
+                  <>
+                    <Link href='/login'>
+                      <Menu.Item icon={<IconUserPlus size={14} color={theme.colors.yellow[6]} stroke={1.5} />}>
+                        Войти
+                      </Menu.Item>
+                    </Link>
+                    <Link href='/register'>
+                      <Menu.Item icon={<IconUserPlus size={14} color={theme.colors.yellow[6]} stroke={1.5} />}>
+                        Регистрация
+                      </Menu.Item>
+                    </Link>
+                  </>
                 }
               </Menu.Dropdown>
             </Menu>
@@ -222,12 +251,32 @@ export default function IndexPage() {
                 tags = tags + `#${mem.attributes.tags[i].name}`;
               }
               return (
-                <CardBlock title="test"
-                  image={url+mem.attributes.image.data.attributes.formats.medium.url}
-                  text={mem.attributes.title}
+                <CardBlock title={mem.attributes.title}
+                  image={url+mem.attributes.image}
+                  text={mem.attributes.text}
                   author={tags} /> 
                 )
             })}
+          </>
+        }
+        {active == 'Подписки' && name != 'Войти' &&
+          <>
+            В разработке
+          </>
+        }
+        {active == 'Подписки' && name == 'Войти' &&
+          <>
+            Войдите в аккаунт, чтобы продолжить
+          </>
+        }
+        {active == 'Рекомендации' && name != 'Войти' &&
+          <>
+            В разработке
+          </>
+        }
+        {active == 'Рекомендации' && name == 'Войти' &&
+          <>
+            Войдите в аккаунт, чтобы продолжить
           </>
         }
       </Container>
