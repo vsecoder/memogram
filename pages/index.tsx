@@ -76,6 +76,9 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+interface EventInterface {
+  target: EventTarget;
+}
 
 export default function IndexPage() {
   const [mems, setMems] = useState([]);
@@ -145,7 +148,7 @@ export default function IndexPage() {
     check_jwt()
   }, [])
 
-  const scrollHandler = (e: { target: { documentElement: { scrollHeight: number; scrollTop: number; }; }; }) => {
+  const scrollHandler = (e: {target: any}) => {
     if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100) {
       setFetching(true);
     }
