@@ -1,7 +1,8 @@
 import { setCookie } from 'nookies';
 import Router from 'next/router';
+import { Button } from '@mantine/core';
   
-  export default function logout() {
+export default function logout() {
     setCookie(null, 'jwt', '' , {
         maxAge: 30 * 24 * 60 * 60,
         path: '/',
@@ -17,6 +18,9 @@ import Router from 'next/router';
     Router.push('/')
 
     return (
-        <>Вы вышли из аккаунта</>
+        <>
+            <p>Вы вышли(или вас выкинуло) из аккаунта</p>
+            <Button onClick={() => Router.push('/')}>На главную</Button>
+        </>
     );
 }
