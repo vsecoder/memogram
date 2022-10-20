@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, SetStateAction } from 'react';
 import { parseCookies } from 'nookies';
 import Router from 'next/router';
 import {
@@ -113,9 +113,9 @@ export default function create() {
       </Title>
   
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-        <Input placeholder="Заголовок" value={title} onChange={(event: {}) => setTitle(event.target.value)} mt={10} />
-        <Input placeholder="Описание" value={description} onChange={(event: {}) => setDescription(event.target.value)} mt={10} />
-        <Input placeholder="Теги (через пробел)" value={tags} onChange={(event: {}) => setTags(event.target.value)} mt={10} />
+        <Input placeholder="Заголовок" value={title} onChange={(event: { target: { value: SetStateAction<string>; }; }) => setTitle(event.target.value)} mt={10} />
+        <Input placeholder="Описание" value={description} onChange={(event: { target: { value: SetStateAction<string>; }; }) => setDescription(event.target.value)} mt={10} />
+        <Input placeholder="Теги (через пробел)" value={tags} onChange={(event: { target: { value: SetStateAction<string>; }; }) => setTags(event.target.value)} mt={10} />
         <FileInput label="Загрузить мем" placeholder="Загрузить мем" accept="image/png,image/jpeg" value={value} onChange={setValue} />
         <Button onClick={handleCreateMem} mt={20}>Опубликовать</Button>
       </Paper>

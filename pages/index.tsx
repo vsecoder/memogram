@@ -145,7 +145,7 @@ export default function IndexPage() {
     check_jwt()
   }, [])
 
-  const scrollHandler = (e) => {
+  const scrollHandler: Function = (e: { target: { documentElement: { scrollHeight: number; scrollTop: number; }; }; }) => {
     if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100) {
       setFetching(true);
     }
@@ -245,7 +245,11 @@ export default function IndexPage() {
       <Container>
         {active == 'Свежее' && 
           <>
-            { mems.map((mem) => {
+            { mems.map((mem: {attributes: {
+              text: string;
+              image: string;
+              title: string;tags: [{name: string, image: string, title: string}]
+            }}) => {
               let tags:string = '';
               for (let i = 0; i < mem.attributes.tags.length; i++) {
                 tags = tags + `#${mem.attributes.tags[i].name}`;
