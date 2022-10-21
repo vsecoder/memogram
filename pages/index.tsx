@@ -74,6 +74,11 @@ const useStyles = createStyles((theme) => ({
       borderColor: theme.colorScheme === 'dark' ? theme.colors.dark[7] : theme.colors.gray[2],
     },
   },
+  tab1: {
+    ['@media (max-width: 600px)']: {
+      padding: '2px'
+    },
+  }
 }));
 
 interface EventInterface {
@@ -106,7 +111,7 @@ export default function IndexPage() {
     'Рекомендации',
   ]
   const items = tabs.map((tab) => (
-    <Tabs.Tab value={tab} key={tab} onClick={() => {setActive(tab)}}>
+    <Tabs.Tab value={tab} key={tab} onClick={() => {setActive(tab)}} className={classes.tab1}>
       {tab}
     </Tabs.Tab>
   ));
@@ -253,7 +258,8 @@ export default function IndexPage() {
             { mems.map((mem: {attributes: {
               text: string;
               image: string;
-              title: string;tags: [{name: string, image: string, title: string}]
+              title: string;
+              tags: [{name: string, image: string, title: string}]
             }}) => {
               let tags:string = '';
               for (let i = 0; i < mem.attributes.tags.length; i++) {
@@ -263,7 +269,8 @@ export default function IndexPage() {
                 <CardBlock title={mem.attributes.title}
                   image={url+mem.attributes.image}
                   text={mem.attributes.text}
-                  author={tags} /> 
+                  author={tags}
+                  key={mem.attributes.image} /> 
                 )
             })}
           </>
