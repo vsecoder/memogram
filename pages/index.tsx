@@ -76,7 +76,7 @@ const useStyles = createStyles((theme) => ({
   },
   tab1: {
     ['@media (max-width: 600px)']: {
-      padding: '2px'
+      padding: '5px'
     },
   }
 }));
