@@ -13,7 +13,7 @@ import {
 } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 
-const url = "http://kreepmeister.keenetic.pro:1337";
+const url = "https://c34a-95-107-46-219.eu.ngrok.io/";
   
   export default function login() {
     const [email, setEmail] = useState('')

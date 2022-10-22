@@ -14,7 +14,7 @@ import {
 import { showNotification } from '@mantine/notifications';
 import Link from 'next/link';
 
-const url = "http://kreepmeister.keenetic.pro:1337";
+const url = "https://c34a-95-107-46-219.eu.ngrok.io/";
   
   export default function login() {
     const [username, setUsername] = useState('')

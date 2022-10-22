@@ -26,7 +26,7 @@ import { parseCookies } from 'nookies';
 import axios from "axios";
 import Router from 'next/router';
 
-const url = "http://kreepmeister.keenetic.pro:1337";
+const url = "https://c34a-95-107-46-219.eu.ngrok.io/";
 
 const useStyles = createStyles((theme) => ({
   header: {
