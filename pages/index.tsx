@@ -26,7 +26,7 @@ import { parseCookies } from 'nookies';
 import axios from "axios";
 import Router from 'next/router';
 
-const url = "https://c34a-95-107-46-219.eu.ngrok.io/";
+const url = "https://c34a-95-107-46-219.eu.ngrok.io";
 
 const useStyles = createStyles((theme) => ({
   header: {

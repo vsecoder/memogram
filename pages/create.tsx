@@ -13,7 +13,7 @@ import {
 } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 
-const url = "https://c34a-95-107-46-219.eu.ngrok.io/";
+const url = "https://c34a-95-107-46-219.eu.ngrok.io";
   
 export default function create() {
   const name = parseCookies().username;
