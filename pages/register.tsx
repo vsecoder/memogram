@@ -2,91 +2,77 @@ import { useState } from 'react';
 import { setCookie } from 'nookies';
 import Router from 'next/router';
 import {
-    TextInput,
-    PasswordInput,
-    Checkbox,
-    Paper,
-    Title,
-    Container,
-    Group,
-    Button,
+  TextInput,
+  PasswordInput,
+  Button,
+  Paper,
+  Title,
+  Container,
 } from '@mantine/core';
-import { showNotification } from '@mantine/notifications';
+import Link from 'next/link';
 
-const url = "https://c34a-95-107-46-219.eu.ngrok.io";
-  
-  export default function login() {
-    const [email, setEmail] = useState('')
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+const url = '/api/auth/register';  // Используем локальный эндпоинт
 
-    async function handleLogin() {
-        const loginInfo = {
-            username: username,
-            email: email,
-            password: password
-        }
+export default function Register() {
+  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
-        const login = await fetch(`${url}/api/auth/local/register`, {
-            method: "POST",
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(loginInfo)
-        })
+  const handleRegister = async () => {
+    const registerInfo = {
+      email,
+      username,
+      password,
+    };
 
-        const loginResponse = await login.json();
+    const register = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(registerInfo),
+    });
 
-        console.log(loginResponse.data)
-        if (!loginResponse.error) {
-            setCookie(null, 'jwt', loginResponse.jwt , {
-                maxAge: 30 * 24 * 60 * 60,
-                path: '/',
-            })
-            setCookie(null, 'id', loginResponse.user.id , {
-                maxAge: 30 * 24 * 60 * 60,
-                path: '/',
-            })
-            setCookie(null, 'username', loginResponse.user.username , {
-                maxAge: 30 * 24 * 60 * 60,
-                path: '/',
-            })
-            Router.push('/')
-        } else if (loginResponse.error.status == 400) {
-            showNotification({
-                title: 'Error',
-                message: 'Заполните все поля!',
-            })
-        } else {
-            showNotification({
-                title: 'Error',
-                message: 'Серверная ошибка, попробуйте позже!',
-            })
-        }
+    const registerResponse = await register.json();
 
+    if (!registerResponse.error) {
+      // Установка JWT и данных пользователя в cookies
+      setCookie(null, 'jwt', registerResponse.jwt, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: '/',
+      });
+      setCookie(null, 'id', registerResponse.user.id, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: '/',
+      });
+      setCookie(null, 'nickname', registerResponse.user.nickname, {
+        maxAge: 30 * 24 * 60 * 60,
+        path: '/',
+      });
+      Router.push('/');
+    } else {
+      alert('Ошибка регистрации: ' + registerResponse.error);
     }
+  };
 
-    return (
-      <Container size={420} my={40}>
-        <Title
-          align="center"
-          sx={({ fontWeight: 900 })}
-        >
-          Создайте аккаунт
-        </Title>
-  
-        <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-          <TextInput label="Username" placeholder="Ваше имя профиля" required onChange={e => setUsername(e.target.value) } value={username} />
-          <TextInput label="Email" placeholder="Ваша почта" required mt="md" onChange={e => setEmail(e.target.value) } value={email} />
-          <PasswordInput label="Пароль" placeholder="Ваш пароль" required mt="md" onChange={e => setPassword(e.target.value) } value={password}  />
-          <Group position="apart" mt="md">
-            <Checkbox label="Запомнить меня" />
-          </Group>
-          <Button fullWidth mt="xl" onClick={() => handleLogin() } type='submit'>
-            Зарегистрироваться
-          </Button>
-        </Paper>
-      </Container>
-    );
+  return (
+    <Container size={420} my={40}>
+      <Title align="center" sx={({ fontWeight: 900 })}>
+        Создать новый аккаунт
+      </Title>
+
+      <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+        <TextInput label="Email" placeholder="Ваш email" required onChange={(e) => setEmail(e.target.value)} value={email} />
+        <TextInput label="Username" placeholder="Имя профиля" required mt="md" onChange={(e) => setUsername(e.target.value)} value={username} />
+        <PasswordInput label="Пароль" placeholder="Ваш пароль" required mt="md" onChange={(e) => setPassword(e.target.value)} value={password} />
+        <Button fullWidth mt="xl" onClick={handleRegister} type="submit">
+          Зарегистрироваться
+        </Button>
+        <Link href="/login">
+          <a>Уже есть аккаунт? Войдите!</a>
+        </Link>
+      </Paper>
+    </Container>
+  );
 }

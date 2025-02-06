@@ -1,8 +1,0 @@
-{
-    "name": "Memogram",
-    "description": "A website as Memogram",
-    "repository": "https://github.com/vsecoder/Memogram",
-    "logo": "https://raw.githubusercontent.com/vsecoder/ametist/main/public/favicon.png",
-    "keywords": ["node", "react", "nextjs"],
-    "image": "heroku/nodejs"
-  }
