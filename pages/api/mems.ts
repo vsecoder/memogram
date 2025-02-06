@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     busboy.on('file', (name: any, file: any, filename: any, encoding: any, mimeType: any) => {
       // Сохраняем файлы
       const fileData: any[] = [];
-      file.on('data', (data) => {
+      file.on('data', (data: any) => {
         fileData.push(data);
       });
       file.on('end', () => {
