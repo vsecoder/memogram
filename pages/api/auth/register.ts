@@ -45,7 +45,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       { expiresIn: '30d' }
     );
 
-    // Возвращаем успешный ответ с JWT токеном
     return res.status(201).json({ message: 'User registered successfully', jwt: token, user: user });
   }
 

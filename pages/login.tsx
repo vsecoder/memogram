@@ -37,7 +37,6 @@ export default function Login() {
     const loginResponse = await login.json();
 
     if (!loginResponse.error) {
-      // Установка JWT и данных пользователя в cookies
       setCookie(null, 'jwt', loginResponse.jwt, {
         maxAge: 30 * 24 * 60 * 60,
         path: '/',

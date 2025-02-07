@@ -11,7 +11,7 @@ import {
 } from '@mantine/core';
 import Link from 'next/link';
 
-const url = '/api/auth/register';  // Используем локальный эндпоинт
+const url = '/api/auth/register';
 
 export default function Register() {
   const [email, setEmail] = useState('');
@@ -37,7 +37,6 @@ export default function Register() {
     const registerResponse = await register.json();
 
     if (!registerResponse.error) {
-      // Установка JWT и данных пользователя в cookies
       setCookie(null, 'jwt', registerResponse.jwt, {
         maxAge: 30 * 24 * 60 * 60,
         path: '/',

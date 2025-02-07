@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 
 const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_ANON_KEY!);
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'; // Используем тот же секрет
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
