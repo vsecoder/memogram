@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
 import { FooterSocial } from '../components/footer';
 import { CardBlock } from '../components/card';
@@ -74,7 +74,7 @@ const useMems = () => {
 
   useEffect(() => {
     if (fetching) {
-      fetch(`/api/get?page=${currentPage}&pageSize=10`)
+      fetch(`/api/get?page=${currentPage}&pageSize=3`)
         .then(res => res.json())
         .then(response => {
           setMems(prev => [...prev, ...response.data]);
@@ -100,6 +100,37 @@ const checkJwt = async (jwt: string | null, router: any) => {
       router.push('/logout');
     }
   }
+};
+
+const Observer = ({ onIntersect }: any) => {
+  const observerRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          onIntersect();
+        }
+      },
+      {
+        root: null,
+        rootMargin: '0px',
+        threshold: 1.0,
+      }
+    );
+
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
+      }
+    };
+  }, [onIntersect]);
+
+  return <div ref={observerRef} style={{ height: '10px' }} />;
 };
 
 export default function IndexPage() {
@@ -183,8 +214,12 @@ export default function IndexPage() {
               />
             );
           })}
+          <Observer onIntersect={() => setFetching(true)} />
         </>
       )}
+      <Container>
+        <p>Loading</p>
+      </Container>
       <FooterSocial />
     </>
   );
