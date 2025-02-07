@@ -1,4 +1,7 @@
-import { createStyles, SimpleGrid, Card, Image, Text, Container, AspectRatio } from '@mantine/core';
+import { createStyles, Card, Image, Text, Container, Button } from '@mantine/core';
+import { IconHeart } from '@tabler/icons';
+import { useCounter } from '@mantine/hooks';
+
 
 const useStyles = createStyles((theme) => ({
   card: {
@@ -24,6 +27,12 @@ const useStyles = createStyles((theme) => ({
     border: '1px #1a1b1e solid',
     borderRadius: '10px'
   },
+  button: {
+    justifyContent: 'end'
+  },
+  buttonIcon: {
+    marginRight: '10px'
+  }
 }));
 
 interface CardData {
@@ -31,10 +40,12 @@ interface CardData {
   image: string,
   text: string,
   author: string,
+  likes: number,
 }
 
-export function CardBlock({ title, image, text, author }: CardData) {
+export function CardBlock({ title, image, text, author, likes }: CardData) {
   const { classes } = useStyles();
+  const [value, { increment, decrement }] = useCounter(likes, { min: 0 });
 
   return (
     <Container py="xl" key={title}>
@@ -50,6 +61,11 @@ export function CardBlock({ title, image, text, author }: CardData) {
           <Text className={classes.text} mt={5}>
             {text}
           </Text>
+          <Button.Group mt={10} className={classes.button}>
+            <Button variant="default" onClick={decrement}>
+              <IconHeart className={classes.buttonIcon} /> <span>{value}</span>
+            </Button>
+          </Button.Group>
         </Card>
       </div>
     </Container>

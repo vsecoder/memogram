@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const { data, error } = await supabase
       .from('mems')
       .select(`id, text, image, title, likes, created_at, 
-               author:users(nickname, id), 
+               author:users(nickname, id), moderated,
                tags:mems_tags(tag_id)`) 
       .order('id', { ascending: false })
       .range(offset, offset + limit - 1);

@@ -65,6 +65,7 @@ interface Mem {
     nickname: string;
   };
   tags: Tag[];
+  moderated: boolean;
 }
 
 const useMems = () => {
@@ -204,6 +205,7 @@ export default function IndexPage() {
         <>
           {mems.map((mem) => {
             const tags = mem.tags.map(tag => `#${tag.name}`).join(' ');
+            if (!mem.moderated) return null;
             return (
               <CardBlock
                 key={mem.id}
@@ -211,6 +213,7 @@ export default function IndexPage() {
                 image={mem.image}
                 text={mem.text}
                 author={tags}
+                likes={mem.likes}
               />
             );
           })}
