@@ -32,9 +32,6 @@ const useStyles = createStyles((theme) => ({
       theme.colorScheme === 'dark' ? 'transparent' : theme.colors.gray[2]
     }`,
   },
-  mainSection: {
-    paddingBottom: theme.spacing.sm,
-  },
   user: {
     color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
     padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
@@ -128,8 +125,8 @@ export default function IndexPage() {
 
   return (
     <>
-      <Header className={classes.header} height={120} p="md">
-        <Container className={classes.mainSection}>
+      <Header className={classes.header} height='auto'>
+        <Container>
           <Group position="apart">
             <AmethystLogo />
             <Menu
